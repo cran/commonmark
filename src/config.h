@@ -6,7 +6,13 @@
   typedef char bool;
 #endif
 
+#if !(defined(__sun) && defined(__SVR4))
 #define HAVE___BUILTIN_EXPECT
+#endif
+
+#ifndef _WIN32
+#define HAVE_C99_SNPRINTF
+#endif
 
 #define HAVE___ATTRIBUTE__
 
