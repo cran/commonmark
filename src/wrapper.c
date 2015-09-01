@@ -5,7 +5,6 @@
 
 #include <Rinternals.h>
 #include <stdlib.h>
-#include <string.h>
 #include "cmark.h"
 
 typedef enum {
@@ -13,7 +12,8 @@ typedef enum {
   FORMAT_HTML,
   FORMAT_XML,
   FORMAT_MAN,
-  FORMAT_COMMONMARK
+  FORMAT_COMMONMARK,
+  FORMAT_LATEX
 } writer_format;
 
 char* print_document(cmark_node *document, writer_format writer, int options, int width){
@@ -23,9 +23,12 @@ char* print_document(cmark_node *document, writer_format writer, int options, in
   case FORMAT_XML:
     return cmark_render_xml(document, options);
   case FORMAT_MAN:
-    return cmark_render_man(document, options);
+    return cmark_render_man(document, options, width);
   case FORMAT_COMMONMARK:
     return cmark_render_commonmark(document, options, width);
+  case FORMAT_LATEX:
+    return cmark_render_latex(document, options, width);
+    break;
   default:
     Rf_error("Unknown output format %d", writer);
   }
@@ -57,8 +60,8 @@ SEXP R_render_markdown(SEXP text, SEXP format, SEXP sourcepos, SEXP hardbreaks, 
   options += asLogical(normalize) * CMARK_OPT_NORMALIZE;
 
   /* render output */
-  const char *input = CHAR(STRING_ELT(text, 0));
-  cmark_node *doc = cmark_parse_document(input, strlen(input), options);
+  SEXP input = STRING_ELT(text, 0);
+  cmark_node *doc = cmark_parse_document(CHAR(input), LENGTH(input), options);
   char *output = print_document(doc, asInteger(format), options, asInteger(width));
   cmark_node_free(doc);
 
