@@ -44,14 +44,17 @@ vector with a subset of available \link{extensions}.}
 }
 \description{
 Converts markdown text to several formats using John MacFarlane's \href{https://github.com/jgm/cmark}{cmark}
-reference implementation. Output in HTML, groff man, CommonMark, and a custom XML format is supported.
+reference implementation. Supported output formats include \code{html}, \code{latex}, groff \code{man}, and normalized
+"commonmark" markdown. In addition the markdown parse tree can be returned in xml format.
 }
 \details{
-Support for extensions is provided via the Github \href{https://github.com/github/cmark}{fork} of cmark.
-See also the manual page on \link{extensions}.
+Support for extensions (including tables and autolink) is provided via the Github
+\href{https://github.com/github/cmark}{fork} of cmark. For now these are opt-in and have to be
+enabled with the \code{extensions} parameter. See also the manual page on \link{extensions}.
 
 When smart punctuation is enabled, straight double and single quotes will be rendered as curly quotes,
-depending on their position. Moreover \code{--} will be rendered as an en-dash, \code{---`` will be rendered as an em-dash, and}...` will be rendered as ellipses.
+depending on their position. Moreover \code{--} will be rendered as -- (en-dash), \code{---} will be
+rendered as --- (em-dash), and \code{...} will be rendered as ... (ellipses).
 }
 \examples{
 md <- readLines(curl::curl("https://raw.githubusercontent.com/yihui/knitr/master/NEWS.md"))
