@@ -150,7 +150,7 @@ static void subject_from_buf(cmark_mem *mem, subject *e, cmark_strbuf *buffer,
   e->refmap = refmap;
   e->last_delim = NULL;
   e->last_bracket = NULL;
-  for (i=0; i <= MAXBACKTICKS; i++) {
+  for (i = 0; i <= MAXBACKTICKS; i++) {
     e->backticks[i] = 0;
   }
   e->scanned_for_backticks = false;
@@ -391,6 +391,7 @@ static void push_delimiter(subject *subj, unsigned char c, bool can_open,
   delim->can_open = can_open;
   delim->can_close = can_close;
   delim->inl_text = inl_text;
+  delim->length = inl_text->as.literal.len;
   delim->previous = subj->last_delim;
   delim->next = NULL;
   if (delim->previous != NULL) {
@@ -500,21 +501,6 @@ static cmark_node *handle_period(subject *subj, bool smart) {
   }
 }
 
-static void add_extensions_openers_bottom(cmark_parser *parser,
-    delimiter **openers_bottom, delimiter *stack_bottom) {
-  cmark_llist *tmp_ext;
-
-  for (tmp_ext = parser->inline_syntax_extensions; tmp_ext; tmp_ext=tmp_ext->next) {
-    cmark_syntax_extension *ext = (cmark_syntax_extension *) tmp_ext->data;
-    cmark_llist *tmp_char;
-    for (tmp_char = ext->special_inline_chars; tmp_char; tmp_char=tmp_char->next) {
-      unsigned char c = (unsigned char)(size_t)tmp_char->data;
-
-      openers_bottom[c] = stack_bottom;
-    }
-  }
-}
-
 static cmark_syntax_extension *get_extension_for_special_char(cmark_parser *parser, unsigned char c) {
   cmark_llist *tmp_ext;
 
@@ -539,14 +525,17 @@ static void process_emphasis(cmark_parser *parser, subject *subj, delimiter *sta
   delimiter *old_closer;
   bool opener_found;
   bool odd_match;
-  delimiter *openers_bottom[128];
+  delimiter *openers_bottom[3][128];
+  int i;
 
   // initialize openers_bottom:
-  openers_bottom['*'] = stack_bottom;
-  openers_bottom['_'] = stack_bottom;
-  openers_bottom['\''] = stack_bottom;
-  openers_bottom['"'] = stack_bottom;
-  add_extensions_openers_bottom(parser, openers_bottom, stack_bottom);
+  memset(&openers_bottom, 0, sizeof(openers_bottom));
+  for (i=0; i < 3; i++) {
+    openers_bottom[i]['*'] = stack_bottom;
+    openers_bottom[i]['_'] = stack_bottom;
+    openers_bottom[i]['\''] = stack_bottom;
+    openers_bottom[i]['"'] = stack_bottom;
+  }
 
   // move back to first relevant delim.
   while (closer != NULL && closer->previous != stack_bottom) {
@@ -562,18 +551,16 @@ static void process_emphasis(cmark_parser *parser, subject *subj, delimiter *sta
       opener_found = false;
       odd_match = false;
       while (opener != NULL && opener != stack_bottom &&
-             opener != openers_bottom[closer->delim_char]) {
-        // interior closer of size 2 can't match opener of size 1
-        // or of size 1 can't match 2
-        odd_match = (closer->can_open || opener->can_close) &&
-                    ((opener->inl_text->as.literal.len +
-                      closer->inl_text->as.literal.len) %
-                         3 ==
-                     0);
-        if (opener->delim_char == closer->delim_char && opener->can_open &&
-            !odd_match) {
-          opener_found = true;
-          break;
+             opener != openers_bottom[closer->length % 3][closer->delim_char]) {
+        if (opener->can_open && opener->delim_char == closer->delim_char) {
+          // interior closer of size 2 can't match opener of size 1
+          // or of size 1 can't match 2
+          odd_match = (closer->can_open || opener->can_close) &&
+                      ((opener->length + closer->length) % 3 == 0);
+          if (!odd_match) {
+            opener_found = true;
+            break;
+          }
         }
         opener = opener->previous;
       }
@@ -607,13 +594,10 @@ static void process_emphasis(cmark_parser *parser, subject *subj, delimiter *sta
         }
         closer = closer->next;
       }
-      if (!opener_found && !odd_match) {
+      if (!opener_found) {
         // set lower bound for future searches for openers
-        // (we don't do this with 'odd_match' set because
-        // a ** that didn't match an earlier * might turn into
-        // an opener, and the * might be matched by something
-        // else.
-        openers_bottom[old_closer->delim_char] = old_closer->previous;
+        openers_bottom[old_closer->length % 3][old_closer->delim_char] =
+		old_closer->previous;
         if (!old_closer->can_open) {
           // we can remove a closer that can't be an
           // opener, once we've seen there's no
@@ -626,7 +610,7 @@ static void process_emphasis(cmark_parser *parser, subject *subj, delimiter *sta
     }
   }
   // free all delimiters in list until stack_bottom:
-  while (subj->last_delim != stack_bottom) {
+  while (subj->last_delim != NULL && subj->last_delim != stack_bottom) {
     remove_delimiter(subj, subj->last_delim);
   }
 }
@@ -642,12 +626,7 @@ static delimiter *S_insert_emph(subject *subj, delimiter *opener,
   cmark_node *tmp, *tmpnext, *emph;
 
   // calculate the actual number of characters used from this closer
-  if (closer_num_chars < 3 || opener_num_chars < 3) {
-    use_delims = closer_num_chars <= opener_num_chars ? closer_num_chars
-                                                      : opener_num_chars;
-  } else { // closer and opener both have >= 3 characters
-    use_delims = closer_num_chars % 2 == 0 ? 2 : 1;
-  }
+  use_delims = (closer_num_chars >= 2 && opener_num_chars >=2) ? 2 : 1;
 
   // remove used characters from associated inlines.
   opener_num_chars -= use_delims;
@@ -878,11 +857,13 @@ static bufsize_t manual_scan_link_url(cmark_chunk *input, bufsize_t offset) {
       if (input->data[i] == '\\')
         i += 2;
       else if (input->data[i] == '(') {
-        ++nb_p; ++i;
+        ++nb_p;
+        ++i;
       } else if (input->data[i] == ')') {
         if (nb_p == 0)
           break;
-        --nb_p; ++i;
+        --nb_p;
+        ++i;
       } else if (cmark_isspace(input->data[i]))
         break;
       else

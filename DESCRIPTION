@@ -1,9 +1,9 @@
 Package: commonmark
 Type: Package
 Title: High Performance CommonMark and Github Markdown Rendering in R
-Version: 1.1
+Version: 1.2
 Authors@R: c(
-    person("Jeroen", "Ooms", ,"jeroen.ooms@stat.ucla.edu", role = c("aut", "cre")),
+    person("Jeroen", "Ooms", ,"jeroen@berkeley.edu", role = c("aut", "cre")),
     person("John MacFarlane", role = "cph", comment = "Author of cmark")
   )
 URL: https://github.com/jeroenooms/commonmark
@@ -17,11 +17,11 @@ Description: The CommonMark specification defines a rationalized version of mark
     and strikethrough text.
 License: BSD_2_clause + file LICENSE
 Suggests: curl
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 6.0.1
 NeedsCompilation: yes
-Packaged: 2016-12-13 10:49:40 UTC; jeroen
+Packaged: 2017-03-01 14:01:10 UTC; jeroen
 Author: Jeroen Ooms [aut, cre],
   John MacFarlane [cph] (Author of cmark)
-Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
+Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 Repository: CRAN
-Date/Publication: 2016-12-13 15:33:43
+Date/Publication: 2017-03-01 19:05:45
