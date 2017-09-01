@@ -26,12 +26,13 @@
 #' @param extensions Enables Github extensions. Can be `TRUE` (all) `FALSE` (none) or a character
 #' vector with a subset of available [extensions].
 #' @param width Specify wrap width (default 0 = nowrap).
-#' @examples md <- readLines(curl::curl("https://raw.githubusercontent.com/yihui/knitr/master/NEWS.md"))
+#' @examples md <- readLines("https://raw.githubusercontent.com/yihui/knitr/master/NEWS.md")
 #' html <- markdown_html(md)
 #' xml <- markdown_xml(md)
 #' man <- markdown_man(md)
 #' tex <- markdown_latex(md)
 #' cm <- markdown_commonmark(md)
+#' text <- markdown_text(md)
 markdown_html <- function(text, hardbreaks = FALSE, smart = FALSE, normalize = FALSE, sourcepos = FALSE, extensions = FALSE){
   text <- enc2utf8(paste(text, collapse="\n"))
   extensions <- get_extensions(extensions)
@@ -64,8 +65,16 @@ markdown_commonmark <- function(text, hardbreaks = FALSE, smart = FALSE, normali
 
 #' @export
 #' @rdname commonmark
-markdown_latex <- function(text, hardbreaks = FALSE, smart = FALSE, normalize = FALSE, width = 0, extensions = FALSE){
+markdown_text <- function(text, hardbreaks = FALSE, smart = FALSE, normalize = FALSE, width = 0, extensions = FALSE){
   text <- enc2utf8(paste(text, collapse="\n"))
   extensions <- get_extensions(extensions)
   .Call(R_render_markdown, text, 5L, FALSE, hardbreaks, smart, normalize, as.integer(width), extensions)
+}
+
+#' @export
+#' @rdname commonmark
+markdown_latex <- function(text, hardbreaks = FALSE, smart = FALSE, normalize = FALSE, width = 0, extensions = FALSE){
+  text <- enc2utf8(paste(text, collapse="\n"))
+  extensions <- get_extensions(extensions)
+  .Call(R_render_markdown, text, 6L, FALSE, hardbreaks, smart, normalize, as.integer(width), extensions)
 }

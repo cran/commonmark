@@ -1,22 +1,24 @@
-PKG_CPPFLAGS= -Icmark -I.
+PKG_CPPFLAGS = -Icmark -I. -DCMARK_STATIC_DEFINE
+PKG_CFLAGS = $(C_VISIBILITY)
 
-LIBCMARK= cmark/cmark.o cmark/node.o cmark/iterator.o cmark/blocks.o cmark/inlines.o \
+LIBCMARK = cmark/cmark.o cmark/node.o cmark/iterator.o cmark/blocks.o cmark/inlines.o \
 	cmark/scanners.o cmark/utf8.o cmark/buffer.o cmark/references.o cmark/render.o \
 	cmark/man.o cmark/xml.o cmark/html.o cmark/commonmark.o cmark/latex.o cmark/houdini_href_e.o \
 	cmark/houdini_html_e.o cmark/houdini_html_u.o cmark/cmark_ctype.o cmark/arena.o \
 	cmark/html.o cmark/linked_list.o cmark/plugin.o cmark/registry.o cmark/syntax_extension.o \
-	extensions/autolink.o extensions/core-extensions.o extensions/ext_scanners.o \
+	cmark/plaintext.o extensions/autolink.o extensions/core-extensions.o extensions/ext_scanners.o \
 	extensions/strikethrough.o extensions/table.o extensions/tagfilter.o
 
-PKG_LIBS= -L. -lstatcmark
+PKG_LIBS = -Lcmark -lstatcmark
+STATLIB = cmark/libstatcmark.a
 
 # For development only
-# all: clean
+all: clean
 
-$(SHLIB): libstatcmark.a
+$(SHLIB): $(STATLIB)
 
-libstatcmark.a: $(LIBCMARK)
-	$(AR) rcs libstatcmark.a $(LIBCMARK)
+$(STATLIB): $(LIBCMARK)
+	$(AR) rcs $(STATLIB) $(LIBCMARK)
 
 clean:
-	rm -f $(LIBCMARK) $(OBJECTS) $(SHLIB) libstatcmark.a
+	rm -f $(LIBCMARK) $(OBJECTS) $(SHLIB) $(STATLIB)

@@ -7,6 +7,7 @@
 \alias{markdown_xml}
 \alias{markdown_man}
 \alias{markdown_commonmark}
+\alias{markdown_text}
 \alias{markdown_latex}
 \title{Parse and render markdown text}
 \usage{
@@ -21,6 +22,9 @@ markdown_man(text, hardbreaks = FALSE, smart = FALSE, normalize = FALSE,
 
 markdown_commonmark(text, hardbreaks = FALSE, smart = FALSE,
   normalize = FALSE, width = 0, extensions = FALSE)
+
+markdown_text(text, hardbreaks = FALSE, smart = FALSE, normalize = FALSE,
+  width = 0, extensions = FALSE)
 
 markdown_latex(text, hardbreaks = FALSE, smart = FALSE, normalize = FALSE,
   width = 0, extensions = FALSE)
@@ -57,10 +61,11 @@ depending on their position. Moreover \code{--} will be rendered as -- (en-dash)
 rendered as --- (em-dash), and \code{...} will be rendered as ... (ellipses).
 }
 \examples{
-md <- readLines(curl::curl("https://raw.githubusercontent.com/yihui/knitr/master/NEWS.md"))
+md <- readLines("https://raw.githubusercontent.com/yihui/knitr/master/NEWS.md")
 html <- markdown_html(md)
 xml <- markdown_xml(md)
 man <- markdown_man(md)
 tex <- markdown_latex(md)
 cm <- markdown_commonmark(md)
+text <- markdown_text(md)
 }

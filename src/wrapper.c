@@ -4,6 +4,7 @@
  */
 
 #include <Rinternals.h>
+#include <R_ext/Visibility.h>
 #include <stdlib.h>
 #include "cmark.h"
 
@@ -17,6 +18,7 @@ typedef enum {
   FORMAT_XML,
   FORMAT_MAN,
   FORMAT_COMMONMARK,
+  FORMAT_PLAINTEXT,
   FORMAT_LATEX
 } writer_format;
 
@@ -32,13 +34,14 @@ static char* print_document(cmark_node *document, writer_format writer, int opti
     return cmark_render_commonmark(document, options, width);
   case FORMAT_LATEX:
     return cmark_render_latex(document, options, width);
-    break;
+  case FORMAT_PLAINTEXT:
+    return cmark_render_plaintext(document, options, width);
   default:
     Rf_error("Unknown output format %d", writer);
   }
 }
 
-SEXP R_render_markdown(SEXP text, SEXP format, SEXP sourcepos, SEXP hardbreaks, SEXP smart, SEXP normalize, SEXP width, SEXP extensions) {
+attribute_visible SEXP R_render_markdown(SEXP text, SEXP format, SEXP sourcepos, SEXP hardbreaks, SEXP smart, SEXP normalize, SEXP width, SEXP extensions) {
 
   /* input validation */
   if(!isString(text))
