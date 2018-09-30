@@ -4,12 +4,11 @@
  */
 
 #include <Rinternals.h>
-#include <R_ext/Visibility.h>
 #include <stdlib.h>
-#include "cmark.h"
+#include "cmark-gfm.h"
 
 /* Github extensions */
-#include "extensions/core-extensions.h"
+#include "extensions/cmark-gfm-core-extensions.h"
 #include "registry.h"
 
 typedef enum {
@@ -41,7 +40,7 @@ static char* print_document(cmark_node *document, writer_format writer, int opti
   }
 }
 
-attribute_visible SEXP R_render_markdown(SEXP text, SEXP format, SEXP sourcepos, SEXP hardbreaks, SEXP smart, SEXP normalize, SEXP width, SEXP extensions) {
+SEXP R_render_markdown(SEXP text, SEXP format, SEXP sourcepos, SEXP hardbreaks, SEXP smart, SEXP normalize, SEXP width, SEXP extensions) {
 
   /* input validation */
   if(!isString(text))
