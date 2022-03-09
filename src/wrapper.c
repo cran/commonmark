@@ -1,4 +1,4 @@
-/** cmark binding for R by Jeroen Ooms (2016)
+/** cmark binding for R by Jeroen Ooms (2021)
  *  Adapted from CLI in main.c
  *  NOTE: man(3) states that cmark assumes UTF-8 for both input and output
  */
@@ -72,9 +72,10 @@ SEXP R_render_markdown(SEXP text, SEXP format, SEXP sourcepos, SEXP hardbreaks, 
   SEXP input = STRING_ELT(text, 0);
   cmark_parser *parser = cmark_parser_new(options);
   for(int i = 0; i < Rf_length(extensions); i++){
-    cmark_syntax_extension *syntax_extension = cmark_find_syntax_extension(CHAR(STRING_ELT(extensions, i)));
+    const char *extname = CHAR(STRING_ELT(extensions, i));
+    cmark_syntax_extension *syntax_extension = cmark_find_syntax_extension(extname);
     if(!syntax_extension)
-      Rf_error("Failed to find load 'table' extension");
+      Rf_error("Failed to load extension '%s'", extname);
     cmark_parser_attach_syntax_extension(parser, syntax_extension);
   }
   cmark_parser_feed(parser, CHAR(input), LENGTH(input));
