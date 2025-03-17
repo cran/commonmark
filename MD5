@@ -1,12 +1,12 @@
-0c5ed975270b5f150f3132c94c396feb *DESCRIPTION
+b005e61991b1df4852a583a05abff2a9 *DESCRIPTION
 8108d2e0802ea1fde49076eb5a9fe6e4 *LICENSE
 d14d8da6f599bc6b91bcf858f907d4ca *NAMESPACE
-60ad623f179bc6be8e55231f7a8a018c *NEWS
+fd02691028ef9dd3a72023f777d2e267 *NEWS
 cc375e8bc59df9afc244bc9fc32196e1 *R/extensions.R
 647253a6d1ca58b3d88e0c60c02a9b1a *R/markdown.R
 d6a2d8f5e0848133644b2938a7c0305e *man/commonmark.Rd
 ba6faf6ab5a000f00e3961995a7b3297 *man/extensions.Rd
-838b2ca02ad3f5ba7e22456c3a528031 *src/Makevars
+7bc57490c3ff35b8ea6c29d9a5c3f0b4 *src/Makevars
 076600a55a3efd90886d1ed69790cbd4 *src/cmark/arena.c
 b9b721af691409a3a183999e3268dd93 *src/cmark/blocks.c
 1b50a700a0a9b789a65e7bf079f1fd20 *src/cmark/buffer.c
