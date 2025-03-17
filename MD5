@@ -1,12 +1,12 @@
-2436d81a2d64a54f10b8d82b6630d871 *DESCRIPTION
+0c5ed975270b5f150f3132c94c396feb *DESCRIPTION
 8108d2e0802ea1fde49076eb5a9fe6e4 *LICENSE
 d14d8da6f599bc6b91bcf858f907d4ca *NAMESPACE
-5653aa5ac98cc7d338193caa4d695c0a *NEWS
-ff3a3629307cd44650d6c7d792970eb3 *R/extensions.R
+60ad623f179bc6be8e55231f7a8a018c *NEWS
+cc375e8bc59df9afc244bc9fc32196e1 *R/extensions.R
 647253a6d1ca58b3d88e0c60c02a9b1a *R/markdown.R
 d6a2d8f5e0848133644b2938a7c0305e *man/commonmark.Rd
-a98bce201f65c4d5d2044179512e4563 *man/extensions.Rd
-d605c0a1aaf014c7e45454b7d59829c1 *src/Makevars
+ba6faf6ab5a000f00e3961995a7b3297 *man/extensions.Rd
+838b2ca02ad3f5ba7e22456c3a528031 *src/Makevars
 076600a55a3efd90886d1ed69790cbd4 *src/cmark/arena.c
 b9b721af691409a3a183999e3268dd93 *src/cmark/blocks.c
 1b50a700a0a9b789a65e7bf079f1fd20 *src/cmark/buffer.c
@@ -40,7 +40,7 @@ d8a4178639489612e300c6c475aa13ee *src/cmark/main.c
 edb9c38f4d55677cb7e6f12ba8b0d188 *src/cmark/man.c
 892ff453274bfc0598c3b50111a998dd *src/cmark/map.c
 295b5b2be8b51be017fa80b24cb80db4 *src/cmark/map.h
-4ce5334bf411d5d7dd3f33cd5492a387 *src/cmark/node.c
+2b79a21d554d0e481aa36af3aa02831b *src/cmark/node.c
 3286abb66c89494074e002b472a730e0 *src/cmark/node.h
 3e50344a0ccdac30b993b41883886829 *src/cmark/parser.h
 ddbd59a033f355f890f538e83b9b9287 *src/cmark/plaintext.c
@@ -58,7 +58,7 @@ a27c108644399a473fc2a9b90dc87896 *src/cmark/render.c
 a4047497acee9b945bd086703aa4ddea *src/cmark/syntax_extension.h
 6e71d45475391eae7fa4a46aeddaa9de *src/cmark/utf8.c
 900cba614a795094db2d9c5e5767ef8c *src/cmark/utf8.h
-d69a1b1989802053152237133a3c8e50 *src/cmark/xml.c
+dd4a9a6f729877c983c195bc4330e450 *src/cmark/xml.c
 94b128edf2e1a64b115299c82574b3cf *src/config.h
 7381f58ff75c1587da964fab13b6878b *src/extensions.c
 6fdf6529aecdaaafb3da333add6ed3cb *src/extensions/autolink.c
@@ -76,6 +76,8 @@ ee8db2d5f1009533a711f33ece1890ae *src/extensions/tagfilter.h
 265ec7a2175c57e76ed778e9b8551b4a *src/extensions/tasklist.c
 4b15684d39bd61acfecf86edb7dac203 *src/extensions/tasklist.h
 d145daa356f467e69892aee5747fb85d *src/init.c
-25e35e6942a58cfc242177df443d0a8c *src/wrapper.c
+e3fa7ec2f2130cd2d26754a6c9bbbc12 *src/patches/362.diff
+d71e1bdc669ad2b7a5c70b19aa5fc50c *src/patches/apply.sh
+eec2dc6701b65156e18435f59061c431 *src/wrapper.c
 c3c27026d48b037770e80b72e7977c74 *tests/testthat.R
-4ab633e1bd4846a309586d22d8802e89 *tests/testthat/test-extensions.R
+6475e5cc4f07681546454aa5ed74e87e *tests/testthat/test-extensions.R
