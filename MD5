@@ -1,12 +1,12 @@
-b005e61991b1df4852a583a05abff2a9 *DESCRIPTION
+f2bccb9859f2ef5b6ccbd07c864ef5f0 *DESCRIPTION
 8108d2e0802ea1fde49076eb5a9fe6e4 *LICENSE
 d14d8da6f599bc6b91bcf858f907d4ca *NAMESPACE
-fd02691028ef9dd3a72023f777d2e267 *NEWS
+0fc08165a91f8667810805b12ef8919c *NEWS
 cc375e8bc59df9afc244bc9fc32196e1 *R/extensions.R
 647253a6d1ca58b3d88e0c60c02a9b1a *R/markdown.R
 d6a2d8f5e0848133644b2938a7c0305e *man/commonmark.Rd
 ba6faf6ab5a000f00e3961995a7b3297 *man/extensions.Rd
-7bc57490c3ff35b8ea6c29d9a5c3f0b4 *src/Makevars
+4292cd341a72d4dc69793f67c381e5c6 *src/Makevars
 076600a55a3efd90886d1ed69790cbd4 *src/cmark/arena.c
 b9b721af691409a3a183999e3268dd93 *src/cmark/blocks.c
 1b50a700a0a9b789a65e7bf079f1fd20 *src/cmark/buffer.c
@@ -34,7 +34,7 @@ bb6c42450ed2978a79f6c2eb94e39016 *src/cmark/inlines.c
 6a8d76e6273530b89de6083561a70cf7 *src/cmark/inlines.h
 accc713da1bf95252c0b9982585678d0 *src/cmark/iterator.c
 661dfdd8e6dbcd01f25f562b82ec27fe *src/cmark/iterator.h
-01f551bc6c4be6cb3a8ac74a8aafc190 *src/cmark/latex.c
+5ae6771fff6fb7fe4f360a7a8a2b1651 *src/cmark/latex.c
 1c61c037bb4e292f55852c40b9b16963 *src/cmark/linked_list.c
 d8a4178639489612e300c6c475aa13ee *src/cmark/main.c
 edb9c38f4d55677cb7e6f12ba8b0d188 *src/cmark/man.c
@@ -58,7 +58,7 @@ a27c108644399a473fc2a9b90dc87896 *src/cmark/render.c
 a4047497acee9b945bd086703aa4ddea *src/cmark/syntax_extension.h
 6e71d45475391eae7fa4a46aeddaa9de *src/cmark/utf8.c
 900cba614a795094db2d9c5e5767ef8c *src/cmark/utf8.h
-dd4a9a6f729877c983c195bc4330e450 *src/cmark/xml.c
+5f7063f4e18ea6baf0fddb933410ee7a *src/cmark/xml.c
 94b128edf2e1a64b115299c82574b3cf *src/config.h
 7381f58ff75c1587da964fab13b6878b *src/extensions.c
 6fdf6529aecdaaafb3da333add6ed3cb *src/extensions/autolink.c
@@ -77,7 +77,9 @@ ee8db2d5f1009533a711f33ece1890ae *src/extensions/tagfilter.h
 4b15684d39bd61acfecf86edb7dac203 *src/extensions/tasklist.h
 d145daa356f467e69892aee5747fb85d *src/init.c
 e3fa7ec2f2130cd2d26754a6c9bbbc12 *src/patches/362.diff
-d71e1bdc669ad2b7a5c70b19aa5fc50c *src/patches/apply.sh
-eec2dc6701b65156e18435f59061c431 *src/wrapper.c
+5515bd3854a4e1c367e5bd8ab4d237b1 *src/patches/apply.sh
+214d3c6b09a6af87370fefd40da9311d *src/patches/latex-footnotes.diff
+def37cec09c2e99f0a94361fbce9a861 *src/wrapper.c
 c3c27026d48b037770e80b72e7977c74 *tests/testthat.R
-6475e5cc4f07681546454aa5ed74e87e *tests/testthat/test-extensions.R
+78c4f81fdff928a6f34bce74173493a2 *tests/testthat/test-extensions.R
+c8e8e4ffb61d2b283f864aac05b30f7f *tests/testthat/test-parser.R
